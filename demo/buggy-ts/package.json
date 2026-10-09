@@ -1,0 +1,8 @@
+{
+  "name": "buggy-average",
+  "scripts": {
+    "build": "tsc --noEmit",
+    "test": "npx tsx --test tests/average.test.ts"
+  },
+  "type": "module"
+}

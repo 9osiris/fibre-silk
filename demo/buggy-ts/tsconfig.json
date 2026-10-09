@@ -1,0 +1,1 @@
+{"compilerOptions":{"module":"nodenext","moduleResolution":"nodenext","skipLibCheck":true,"strict":true,"target":"es2022"},"include":["src","tests"]}
