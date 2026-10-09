@@ -207,7 +207,10 @@ let SQL: SqlJsStatic | null = null;
 
 // find the sql.js wasm binary across dev, test, and packaged layouts
 function loadWasmBinary(): ArrayBuffer {
+  // electron-builder ships the wasm via extraResources, so packaged builds find it under process.resourcesPath
+  const resourcesPath = (process as unknown as { resourcesPath?: string }).resourcesPath;
   const candidates = [
+    ...(resourcesPath ? [path.join(resourcesPath, "sql-wasm.wasm")] : []),
     path.join(process.cwd(), "core", "node_modules", "sql.js", "dist", "sql-wasm.wasm"),
     path.join(process.cwd(), "node_modules", "sql.js", "dist", "sql-wasm.wasm"),
     path.join(path.dirname(new URL(import.meta.url).pathname), "node_modules", "sql.js", "dist", "sql-wasm.wasm"),
