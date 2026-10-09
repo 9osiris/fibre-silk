@@ -1,0 +1,17 @@
+{
+  "name": "silk-core",
+  "type": "module",
+  "scripts": {
+    "test": "tsx --test"
+  },
+  "dependencies": {
+    "@napi-rs/keyring": "^2.1.0",
+    "sql.js": "^1.14.2"
+  },
+  "devDependencies": {
+    "@types/node": "^26.6.4",
+    "@types/sql.js": "^1.4.11",
+    "tsx": "^4.23.15",
+    "typescript": "^7.0.2"
+  }
+}
