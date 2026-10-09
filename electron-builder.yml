@@ -1,0 +1,16 @@
+appId: rocks.osiris.silk
+productName: Silk
+directories:
+  output: release
+files:
+  - electron/dist/**/*
+  - ui/dist/**/*
+  - package.json
+win:
+  target: nsis
+  arch: x64
+  publisherName: Layered Innovation
+nsis:
+  oneClick: false
+  allowToChangeInstallationDirectory: true
+  shortcutName: Silk

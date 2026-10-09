@@ -1,0 +1,32 @@
+{
+  "author": "Layered Innovation",
+  "description": "Silk by Layered Innovation, powered by Fibre. A personal AI agent desktop app for Windows.",
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "@types/sql.js": "^1.4.11",
+    "concurrently": "^9.1.0",
+    "electron": "^38.0.0",
+    "electron-builder": "^26.0.0",
+    "esbuild": "^0.25.0",
+    "typescript": "^5.6.0",
+    "vite": "^7.0.0"
+  },
+  "main": "electron/dist/main.js",
+  "name": "silk",
+  "productName": "Silk",
+  "scripts": {
+    "build": "npm run typecheck && npm run bundle:electron && vite build --config ui/vite.config.ts && electron-builder --win",
+    "bundle:electron": "esbuild electron/main.ts --bundle --platform=node --format=esm --outfile=electron/dist/main.js --external:electron --log-level=warning && esbuild electron/preload.ts --bundle --platform=node --format=cjs --outfile=electron/dist/preload.js --external:electron --log-level=warning",
+    "dev": "concurrently \"vite --config ui/vite.config.ts\" \"npm run electron:dev\"",
+    "electron:dev": "npm run bundle:electron && electron .",
+    "pack": "electron-builder --win",
+    "test": "echo \"no shell unit tests yet, typecheck is the gate\" && npm run typecheck",
+    "typecheck": "tsc --noEmit"
+  },
+  "type": "module",
+  "version": "0.1.0",
+  "dependencies": {
+    "@napi-rs/keyring": "^2.1.0",
+    "sql.js": "^1.14.2"
+  }
+}
