@@ -9,6 +9,7 @@ import {
   type PermissionStore,
   type PolicyLevel,
 } from "./permissions.js";
+import { redactValue } from "./approval-hook.js";
 
 export interface ToolResult {
   ok: boolean;
@@ -38,10 +39,11 @@ export interface ToolRuntimeOptions {
   toolTimeoutMs?: number;
 }
 
-// short human-readable line for the approval prompt. never includes secrets,
-// only the tool name and truncated args.
+// short human-readable line for the approval prompt. secret values are
+// redacted: the prompt (and the waiting_for_approval event) must never
+// carry passwords, tokens, or api keys.
 function summarize(tool: string, args: Record<string, unknown>): string {
-  const raw = JSON.stringify(args);
+  const raw = JSON.stringify(redactValue(args));
   return `${tool} ${raw.length > 120 ? raw.slice(0, 120) + "..." : raw}`;
 }
 
@@ -201,7 +203,6 @@ export class ToolRuntime {
       return { ok: true, output, ms };
     } catch (err) {
       const ms = Date.now() - started;
-      this.store.consume(name);
       const message = err instanceof Error ? err.message : String(err);
       emit({
         type: "agent.tool_failed",
